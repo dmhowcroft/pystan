@@ -156,6 +156,47 @@ extensions = [
     Extension("pystan._misc", ["pystan/_misc.pyx"], language='c++')
 ]
 
+## libraries
+
+libsundials_cvodes_sources = [
+    'pystan/stan/lib/stan_math_2.15.0/lib/cvodes_2.9.0/src/cvodes/cvodes.c',
+    'pystan/stan/lib/stan_math_2.15.0/lib/cvodes_2.9.0/src/cvodes/cvodes_io.c',
+    'pystan/stan/lib/stan_math_2.15.0/lib/cvodes_2.9.0/src/cvodes/cvodea.c',
+    'pystan/stan/lib/stan_math_2.15.0/lib/cvodes_2.9.0/src/cvodes/cvodea_io.c',
+    'pystan/stan/lib/stan_math_2.15.0/lib/cvodes_2.9.0/src/cvodes/cvodes_direct.c',
+    'pystan/stan/lib/stan_math_2.15.0/lib/cvodes_2.9.0/src/cvodes/cvodes_band.c',
+    'pystan/stan/lib/stan_math_2.15.0/lib/cvodes_2.9.0/src/cvodes/cvodes_dense.c',
+    'pystan/stan/lib/stan_math_2.15.0/lib/cvodes_2.9.0/src/cvodes/cvodes_diag.c',
+    'pystan/stan/lib/stan_math_2.15.0/lib/cvodes_2.9.0/src/cvodes/cvodes_spils.c',
+    'pystan/stan/lib/stan_math_2.15.0/lib/cvodes_2.9.0/src/cvodes/cvodes_spbcgs.c',
+    'pystan/stan/lib/stan_math_2.15.0/lib/cvodes_2.9.0/src/cvodes/cvodes_spgmr.c',
+    'pystan/stan/lib/stan_math_2.15.0/lib/cvodes_2.9.0/src/cvodes/cvodes_sptfqmr.c',
+    'pystan/stan/lib/stan_math_2.15.0/lib/cvodes_2.9.0/src/cvodes/cvodes_sparse.c',
+    'pystan/stan/lib/stan_math_2.15.0/lib/cvodes_2.9.0/src/cvodes/cvodes_bandpre.c',
+    'pystan/stan/lib/stan_math_2.15.0/lib/cvodes_2.9.0/src/cvodes/cvodes_bbdpre.c',
+]
+
+libsundials_nvecserial_sources = [
+    'pystan/stan/lib/stan_math_2.15.0/lib/cvodes_2.9.0/src/nvec_ser/nvector_serial.c',
+    'pystan/stan/lib/stan_math_2.15.0/lib/cvodes_2.9.0/src/sundials/sundials_math.c',
+]
+
+cvodes_include_dirs = [
+    'pystan/stan/lib/stan_math_2.15.0/lib/cvodes_2.9.0/include',
+]
+
+
+# setuptools likely accomodates this if I override build_clib
+#libraries = [
+#    Library('libsundials_nvecserial',
+#            libsundials_cvodes_sources,
+#            language='c++',
+#            include_dirs=cvodes_include_dirs),
+#    Library('libsundials_cvodes',
+#            libsundials_cvodes_sources,
+#            include_dirs=cvodes_include_dirs),
+#]
+
 
 ## package data
 package_data_pats = ['*.hpp', '*.pxd', '*.pyx', 'tests/data/*.csv']
@@ -190,6 +231,7 @@ def setup_package():
                               'pystan.external.enum',
                               'pystan.external.scipy'],
                     ext_modules=extensions,
+                    libraries=libraries,
                     package_data={'pystan': package_data_pats},
                     platforms='any',
                     description=DESCRIPTION,

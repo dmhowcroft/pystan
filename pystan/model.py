@@ -291,6 +291,7 @@ class StanModel:
                               language="c++",
                               sources=[pyx_file],
                               define_macros=stan_macros,
+                              libraries=['sundials_nvecserial', 'sundials_cvodes'],
                               include_dirs=include_dirs,
                               extra_compile_args=extra_compile_args)
 

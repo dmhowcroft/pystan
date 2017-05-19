@@ -58,5 +58,5 @@ class TestCVODES(unittest.TestCase):
               y_hat = integrate_ode_bdf(sho, y0_p, t0, ts, theta_p, x, x_int, 1e-10, 1e-10, 1e8);
             }
         """
-        model = pystan.StanModel(model_code=model_code)
+        model = pystan.StanModel(model_code=model_code, verbose=True)
         self.assertIsNotNone(model)
