@@ -185,18 +185,16 @@ cvodes_include_dirs = [
     'pystan/stan/lib/stan_math_2.15.0/lib/cvodes_2.9.0/include',
 ]
 
-
-# setuptools likely accomodates this if I override build_clib
-#libraries = [
-#    Library('libsundials_nvecserial',
-#            libsundials_cvodes_sources,
-#            language='c++',
-#            include_dirs=cvodes_include_dirs),
-#    Library('libsundials_cvodes',
-#            libsundials_cvodes_sources,
-#            include_dirs=cvodes_include_dirs),
-#]
-
+# from distutils: libraries must be a list of 2-tuples with the following
+# form (library_name, build_info_dict)
+libraries = [
+    ('sundials_nvecserial', {'sources': libsundials_cvodes_sources,
+                                'language': 'c++',
+                                'include_dirs': cvodes_include_dirs}),
+    ('sundials_cvodes', {'sources': libsundials_cvodes_sources,
+                            'language': 'c++',
+                            'include_dirs': cvodes_include_dirs})
+]
 
 ## package data
 package_data_pats = ['*.hpp', '*.pxd', '*.pyx', 'tests/data/*.csv']
